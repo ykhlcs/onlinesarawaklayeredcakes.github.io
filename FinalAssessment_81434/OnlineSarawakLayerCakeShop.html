@@ -1,0 +1,300 @@
+<?php
+// Establish database connection
+$host = "localhost";
+$username = "your_username";
+$password = "your_password";
+$database = "your_database";
+
+$conn = mysqli_connect($host, $username, $password, $database);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Retrieve payment details from the query parameters
+if (isset($_GET['name']) && isset($_GET['email']) && isset($_GET['amount'])) {
+    $name = $_GET['name'];
+    $email = $_GET['email'];
+    $amount = $_GET['amount'];
+
+    // Save payment details to the database
+    $sql = "INSERT INTO payments (name, email, amount) VALUES ('$name', '$email', '$amount')";
+    if (mysqli_query($conn, $sql)) {
+        echo "Payment saved successfully.";
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+}
+
+mysqli_close($conn);
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sarawak Layer Cakes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #eba9ff;
+      color: #000000;
+      padding: 10px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px;
+    }
+
+    .product {
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      padding: 20px;
+      width: 300px;
+    }
+
+    .product img {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+
+    .product h2 {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .product p {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .product button {
+      background-color: #740297;
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      cursor: pointer;
+      display: block;
+      font-size: 14px;
+      margin-top: 10px;
+      padding: 10px 20px;
+    }
+
+    .product button:hover {
+      background-color: #5482ff;
+    }
+
+    .description {
+      padding: 20px;
+      text-align: justify;
+    }
+
+    #cart {
+      position: static;
+      top: 10px;
+      right: 10px;
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #cart h3 {
+      margin: 0;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    #cartItems {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #cartItems li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    #cartItems button {
+      background-color: #ccc;
+      border: none;
+      border-radius: 3px;
+      color: #000;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 2px 5px;
+    }
+
+    #payment-section {
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #payment-section h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    #payment-section button {
+      background-color: #740297;
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      padding: 10px 20px;
+    }
+
+    #payment-section button:hover {
+      background-color: #5482ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sarawak Layer Cakes Shop</h1>
+    <div id="cart">
+      <h3>Shopping Cart</h3>
+      <ul id="cartItems"></ul>
+    </div>
+  </header>
+
+  <section id="description">
+    <h2>About Sarawak Layer Cake</h2>
+    <p>
+      Sarawak Layer Cake, also known as Kek Lapis Sarawak, is a traditional Malaysian cake famous for its beautiful layers and rich flavors. Made with a combination of flour, eggs, butter, and various flavorings, each layer is individually baked before being carefully stacked to create intricate patterns. It is a popular delicacy for celebrations and is enjoyed by people of all ages. Browse our selection of delicious Sarawak Layer Cakes and indulge in this delightful treat!
+    </p>
+  </section>
+
+  <main>
+    <div class="product">
+      <img src="Sarawak layer cake.jpg" alt="Cake 1">
+      <h2>Sarawak Layer Cake 1</h2>
+      <p class="price">RM55.00</p>
+      <button onclick="addToCart(1)">Add to Cart</button>
+    </div>
+  
+    <div class="product">
+      <img src="Sarawak layer cake (3).jpg" alt="Cake 2">
+      <h2>Sarawak Layer Cake 2</h2>
+      <p class="price">RM50.00</p>
+      <button onclick="addToCart(2)">Add to Cart</button>
+    </div>
+  
+    <div class="product">
+      <img src="Sarawak layer cake (2).jpg" alt="Cake 3">
+      <h2>Sarawak Layer Cake 3</h2>
+      <p class="price">RM45.00</p>
+      <button onclick="addToCart(3)">Add to Cart</button>
+    </div>
+  
+    <div class="product">
+      <img src="Sarawak layer cake (1).jpg" alt="Cake 4">
+      <h2>Sarawak Layer Cake 4</h2>
+      <p class="price">RM60.00</p>
+      <button onclick="addToCart(4)">Add to Cart</button>
+    </div>
+  </main>
+  
+
+  <div id="payment-section">
+    <h3>Payment</h3>
+    <button onclick="openPaymentGateway()">Pay Now</button>
+  </div>
+
+  <script>
+    const cart = {};
+
+    function addToCart(productId) {
+      if (cart[productId]) {
+        cart[productId]++;
+      } else {
+        cart[productId] = 1;
+      }
+
+      updateCartDisplay();
+      console.log(`Item ${productId} added to cart. Cart:`, cart);
+    }
+
+    function removeFromCart(productId) {
+      if (cart[productId]) {
+        delete cart[productId];
+        updateCartDisplay();
+        console.log(`Item ${productId} removed from cart. Cart:`, cart);
+      }
+    }
+
+    function updateQuantity(productId, quantity) {
+      if (quantity > 0) {
+        cart[productId] = quantity;
+        console.log(`Quantity of item ${productId} updated. Cart:`, cart);
+      } else {
+        removeFromCart(productId);
+      }
+
+      updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+      const cartItemsElement = document.getElementById("cartItems");
+      cartItemsElement.innerHTML = "";
+
+      for (const productId in cart) {
+        const quantity = cart[productId];
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span>Product ${productId}: ${quantity}</span>
+          <button onclick="updateQuantity(${productId}, ${quantity - 1})">-</button>
+          <button onclick="updateQuantity(${productId}, ${quantity + 1})">+</button>
+          <button onclick="removeFromCart(${productId})">Remove</button>
+        `;
+
+        cartItemsElement.appendChild(li);
+      }
+    }
+
+    function openPaymentGateway() {
+        // Retrieve payment details (example: hard-coded values)
+        var name = "John Doe";
+        var email = "john.doe@example.com";
+        var amount = 50.00; // Example payment amount
+  
+        // Construct the payment gateway URL with the payment details
+        var paymentGatewayURL = "https://example.com/payment_gateway";
+        paymentGatewayURL += "?name=" + encodeURIComponent(name);
+        paymentGatewayURL += "&email=" + encodeURIComponent(email);
+        paymentGatewayURL += "&amount=" + encodeURIComponent(amount);
+  
+        // Open the payment gateway in a new window/tab
+        window.open('https://example.com/payment_gateway', "_blank");
+      }
+
+  </script>
+</body>
+</html>
